@@ -1,0 +1,73 @@
+using System;
+using System.Collections.Generic;
+
+class Order
+{
+    public int OrderId { get; set; }
+    public string Symbol { get; set; }
+    public int Quantity { get; set; }
+    public decimal Price { get; set; }
+    public OrderType Type { get; set; }
+}
+
+enum OrderType
+{
+    Buy,
+    Sell
+}
+
+class OrderManager
+{
+    private List<Order> orders;
+
+    public OrderManager()
+    {
+        orders = new List<Order>();
+    }
+
+    public void PlaceOrder(Order order)
+    {
+        orders.Add(order);
+        Console.WriteLine($"Order placed: {order.Type} {order.Quantity} shares of {order.Symbol} at {order.Price}");
+    }
+
+    public void PrintOrders()
+    {
+        Console.WriteLine("Current Orders:");
+        foreach (var order in orders)
+        {
+            Console.WriteLine($"Order ID: {order.OrderId}, Symbol: {order.Symbol}, Type: {order.Type}, Quantity: {order.Quantity}, Price: {order.Price}");
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        OrderManager orderManager = new OrderManager();
+
+        Order buyOrder = new Order
+        {
+            OrderId = 1,
+            Symbol = "AAPL",
+            Quantity = 10,
+            Price = 150.50m,
+            Type = OrderType.Buy
+        };
+
+        Order sellOrder = new Order
+        {
+            OrderId = 2,
+            Symbol = "GOOGL",
+            Quantity = 5,
+            Price = 2800.75m,
+            Type = OrderType.Sell
+        };
+
+        orderManager.PlaceOrder(buyOrder);
+        orderManager.PlaceOrder(sellOrder);
+
+        orderManager.PrintOrders();
+    }
+}
